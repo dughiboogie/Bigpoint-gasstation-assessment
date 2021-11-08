@@ -1,5 +1,6 @@
 package marcodugatto.assessment.gasstation;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -23,9 +24,10 @@ public class GasStationApplication {
 		myGasStation.setPrice(GasType.SUPER, 1.78);
 		myGasStation.setPrice(GasType.DIESEL, 1.56);
 		
-		myGasStation.addGasPump(new GasPump(GasType.REGULAR, 1000));
-		myGasStation.addGasPump(new GasPump(GasType.REGULAR, 500));
-		myGasStation.addGasPump(new GasPump(GasType.DIESEL, 1000));
+		myGasStation.addGasPump(new GasPump(GasType.REGULAR, 100));
+		myGasStation.addGasPump(new GasPump(GasType.REGULAR, 100));
+		myGasStation.addGasPump(new GasPump(GasType.DIESEL, 500));
+		myGasStation.addGasPump(new GasPump(GasType.SUPER, 300));
 
 		
 		Runnable task1 = () -> {
@@ -70,7 +72,7 @@ public class GasStationApplication {
 		
 		Runnable task5 = () -> {
 		    try {
-				System.out.println("Price to pay for transaction 5: " + myGasStation.buyGas(GasType.REGULAR, 20, 1.9));
+				System.out.println("Price to pay for transaction 5: " + myGasStation.buyGas(GasType.REGULAR, 70, 1.9));
 			} catch (NotEnoughGasException e) {
 				System.out.println("Not enough gas");
 			} catch (GasTooExpensiveException e) {
@@ -80,7 +82,7 @@ public class GasStationApplication {
 		
 		Runnable task6 = () -> {
 		    try {
-				System.out.println("Price to pay for transaction 6: " + myGasStation.buyGas(GasType.REGULAR, 30, 1.2));
+				System.out.println("Price to pay for transaction 6: " + myGasStation.buyGas(GasType.REGULAR, 30, 1.9));
 			} catch (NotEnoughGasException e) {
 				System.out.println("Not enough gas");
 			} catch (GasTooExpensiveException e) {
@@ -102,25 +104,32 @@ public class GasStationApplication {
 		 * Shutdown executor
 		 */
 		try {
-		    System.out.println("attempt to shutdown executor");
+		    System.out.println("Attempt to shutdown executor");
 		    executor.shutdown();
 		    executor.awaitTermination(10, TimeUnit.SECONDS);
 		}
 		catch (InterruptedException e) {
-		    System.err.println("tasks interrupted");
+		    System.err.println("Tasks interrupted");
 		}
 		finally {
 		    if (!executor.isTerminated()) {
-		        System.err.println("cancel non-finished tasks");
+		        System.err.println("Cancel non-finished tasks");
 		    }
 		    executor.shutdownNow();
-		    System.out.println("shutdown finished");
+		    System.out.println("Shutdown finished");
 		}
 		
 		System.out.println("Total revenue: " + myGasStation.getRevenue());
 		System.out.println("Total number of sales: " + myGasStation.getNumberOfSales());
 		System.out.println("Total number of cancellations no gas: " + myGasStation.getNumberOfCancellationsNoGas());
 		System.out.println("Total number of cancellations too expensive: " + myGasStation.getNumberOfCancellationsTooExpensive());
+		
+		
+		ArrayList<GasPump> gasPumps = (ArrayList<GasPump>) myGasStation.getGasPumps(); 
+		
+		for (int i = 0; i < gasPumps.size(); i++) {
+			System.out.println("Gas remaining in pump " + i + ": " + gasPumps.get(i).getRemainingAmount());
+		}
 		
 	}
 
