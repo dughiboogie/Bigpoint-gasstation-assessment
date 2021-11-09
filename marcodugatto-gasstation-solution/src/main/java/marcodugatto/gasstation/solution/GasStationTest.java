@@ -1,4 +1,4 @@
-package marcodugatto.assessment.gasstation;
+package marcodugatto.gasstation.solution;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -10,17 +10,16 @@ import net.bigpoint.assessment.gasstation.GasType;
 import net.bigpoint.assessment.gasstation.exceptions.GasTooExpensiveException;
 import net.bigpoint.assessment.gasstation.exceptions.NotEnoughGasException;
 
-public class GasStationApplication {
-	
+public class GasStationTest {
+
 	private static MyGasStation myGasStation = new MyGasStation();
 	
 	public static void main(String[] args) {
-		
 		/*
 		 * Gas station initialisation
 		 */
 		
-		myGasStation.setPrice(GasType.REGULAR, 1.62);
+		myGasStation.setPrice(GasType.REGULAR, 1.63);
 		myGasStation.setPrice(GasType.SUPER, 1.78);
 		myGasStation.setPrice(GasType.DIESEL, 1.56);
 		
@@ -106,7 +105,7 @@ public class GasStationApplication {
 		try {
 		    System.out.println("Attempt to shutdown executor");
 		    executor.shutdown();
-		    executor.awaitTermination(10, TimeUnit.SECONDS);
+		    executor.awaitTermination(20, TimeUnit.SECONDS);
 		}
 		catch (InterruptedException e) {
 		    System.err.println("Tasks interrupted");

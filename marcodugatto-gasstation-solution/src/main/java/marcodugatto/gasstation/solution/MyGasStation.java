@@ -1,4 +1,4 @@
-package marcodugatto.assessment.gasstation;
+package marcodugatto.gasstation.solution;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -272,11 +272,15 @@ class MyGasStation implements GasStation {
 	 * 
 	 * @param type
 	 *            the type of gas
-	 * @return the price per liter for this type of gas
+	 * @return the price per liter for this type of gas, or 0.0 if the price for this gas is not set
 	 */
 	public double getPrice(GasType type) {
-		double price = gasPrices.get(type);
-		return price;
+		if(gasPrices.containsKey(type)) {
+			double price = gasPrices.get(type);			
+			return price;
+		}
+		
+		return 0.0;
 	}
 
 	/**
@@ -294,5 +298,4 @@ class MyGasStation implements GasStation {
 		gasPrices.put(type, price);
 	}
 	
-		
 }
